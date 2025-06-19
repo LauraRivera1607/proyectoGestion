@@ -51,12 +51,17 @@ export default function CmmiEvaluar({ framework }: Props) {
         }
 
         setLoading(true);
-        router.post('/cmmi/asses', { respuestas }, {
+        router.post('/cmmi/asses', {
+            framework: 'CMMI',
+            domain: null,
+            respuestas,
+        }, {
             onFinish: () => setLoading(false),
             onSuccess: () => toast.success('Evaluación enviada correctamente'),
             onError: () => toast.error('Ocurrió un error al guardar las respuestas'),
         });
     };
+
 
     return (
         <AppSidebarLayout breadcrumbs={[{ title: 'CMMI', href: '/cmmi' }, { title: 'Evaluación', href: '/cmmi/evaluar' }]}>

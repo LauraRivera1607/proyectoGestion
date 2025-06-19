@@ -8,7 +8,8 @@ use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Framework;
 use App\Models\Answer;
-
+use App\Models\Evaluation;
+use App\Models\Option;
 
 class CmmiController extends Controller
 {
@@ -35,30 +36,52 @@ class CmmiController extends Controller
 
     public function save(Request $request)
     {
-        try {
-            $user = $request->user();
+        $user = $request->user();
 
-            $data = $request->validate([
-                'respuestas' => 'required|array',
-                'respuestas.*.question_id' => 'required|exists:questions,id',
-                'respuestas.*.option_id' => 'required|exists:options,id',
-            ]);
+        $data = $request->validate([
+            'framework' => 'required|in:CMMI,COBIT',
+            'domain' => 'nullable|string',
+            'respuestas' => 'required|array',
+            'respuestas.*.question_id' => 'required|exists:questions,id',
+            'respuestas.*.option_id' => 'required|exists:options,id',
+        ]);
 
-            foreach ($data['respuestas'] as $respuesta) {
-                Answer::updateOrCreate(
-                    [
-                        'user_id' => $user->id,
-                        'question_id' => $respuesta['question_id'],
-                    ],
-                    [
-                        'option_id' => $respuesta['option_id'],
-                    ]
-                );
-            }
+        $total = 0;
 
-            return redirect()->route('cmmi.index')->with('success', 'Respuestas guardadas correctamente.');
-        } catch (\Throwable $e) {
-            return back()->withErrors(['error' => $e->getMessage()]);
+        foreach ($data['respuestas'] as $respuesta) {
+            $score = Option::find($respuesta['option_id'])->score ?? 0;
+            $total += $score;
         }
+
+        $promedio = $total / count($data['respuestas']);
+        $nivel = match (true) {
+            $promedio < 1 => 1,
+            $promedio < 2 => 2,
+            $promedio < 3 => 3,
+            $promedio < 4 => 4,
+            default => 5,
+        };
+
+        $evaluation = Evaluation::create([
+            'user_id' => $user->id,
+            'framework' => $data['framework'],
+            'domain' => $data['domain'],
+            'score_total' => $total,
+            'nivel' => $nivel,
+        ]);
+
+        foreach ($data['respuestas'] as $respuesta) {
+            Answer::updateOrCreate(
+                [
+                    'user_id' => $user->id,
+                    'question_id' => $respuesta['question_id'],
+                    'evaluation_id' => $evaluation->id,
+                ],
+                [
+                    'option_id' => $respuesta['option_id'],
+                ]
+            );
+        }
+        return Inertia::location(route('dashboard'));
     }
 }
