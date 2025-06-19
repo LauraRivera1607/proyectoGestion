@@ -1,11 +1,18 @@
-import { NavFooter } from '@/components/nav-footer';
-import { NavMain } from '@/components/nav-main';
-import { NavUser } from '@/components/nav-user';
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
-import AppLogo from './app-logo';
+import { LayoutGrid } from 'lucide-react';
+
+import { NavUser } from '@/components/nav-user';
+import { NavMain } from '@/components/nav-main';
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+} from '@/components/ui/sidebar';
+import { type NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
     {
@@ -15,17 +22,9 @@ const mainNavItems: NavItem[] = [
     },
 ];
 
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
-    },
+const staticFrameworks = [
+    { id: 'cobit', name: 'COBIT' },
+    { id: 'cmmi', name: 'CMMI' },
 ];
 
 export function AppSidebar() {
@@ -34,9 +33,9 @@ export function AppSidebar() {
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
-                        <SidebarMenuButton size="lg" asChild>
+                        <SidebarMenuButton asChild>
                             <Link href="/dashboard" prefetch>
-                                <AppLogo />
+                                <span className="text-lg font-bold">Inicio</span>
                             </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
@@ -45,10 +44,21 @@ export function AppSidebar() {
 
             <SidebarContent>
                 <NavMain items={mainNavItems} />
+                <SidebarMenu className="mt-6">
+                    <span className="px-4 text-xs font-semibold text-muted-foreground uppercase">Marcos</span>
+                    {staticFrameworks.map(fw => (
+                        <SidebarMenuItem key={fw.id}>
+                            <SidebarMenuButton asChild>
+                                <Link href={`/${fw.id}`}>
+                                    {fw.name}
+                                </Link>
+                            </SidebarMenuButton>
+                        </SidebarMenuItem>
+                    ))}
+                </SidebarMenu>
             </SidebarContent>
 
             <SidebarFooter>
-                <NavFooter items={footerNavItems} className="mt-auto" />
                 <NavUser />
             </SidebarFooter>
         </Sidebar>
