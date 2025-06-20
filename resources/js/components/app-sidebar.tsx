@@ -1,6 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { LayoutGrid } from 'lucide-react';
-
+import { LayoutGrid, History } from 'lucide-react'; 
 import { NavUser } from '@/components/nav-user';
 import { NavMain } from '@/components/nav-main';
 import {
@@ -19,6 +18,11 @@ const mainNavItems: NavItem[] = [
         title: 'Dashboard',
         href: '/dashboard',
         icon: LayoutGrid,
+    },
+    {
+        title: 'Historial',
+        href: '/history',
+        icon: History, 
     },
 ];
 

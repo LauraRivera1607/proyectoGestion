@@ -1,9 +1,11 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Evaluation;
+use Illuminate\Support\Collection;
 
 class DashboardController extends Controller
 {
@@ -26,16 +28,13 @@ class DashboardController extends Controller
 
         $evaluacionesCobit = Evaluation::where('user_id', $user->id)
             ->where('framework', 'COBIT')
+            ->orderByDesc('created_at')
             ->get()
             ->groupBy('domain')
-            ->map(function ($evaluaciones) {
-                $total = $evaluaciones->sum('score_total');
-                $count = $evaluaciones->count();
-                return [
-                    'domain' => $evaluaciones->first()->domain,
-                    'percentage' => round($total / $count, 2),
-                ];
-            })
+            ->map(fn(Collection $group) => [
+                'domain' => $group->first()->domain,
+                'percentage' => $group->first()->nivel, 
+            ])
             ->values();
 
         return Inertia::render('dashboard', [
