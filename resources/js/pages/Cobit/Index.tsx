@@ -30,7 +30,7 @@ export default function CobitIndex() {
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 <Button asChild>
-                                    <Link href="/cobit/evaluar-todo">
+                                    <Link href={route('cobit.allQuestions')}>
                                         Evaluar los 5 dominios
                                     </Link>
                                 </Button>

@@ -15,7 +15,7 @@ export default function CmmiIndex() {
                 </p>
 
                 <Button asChild>
-                    <Link href="/cmmi/asses">
+                    <Link href={route('cmmi.asses')}>
                         Empezar evaluación
                     </Link>
                 </Button>
