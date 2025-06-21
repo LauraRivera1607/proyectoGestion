@@ -76,9 +76,9 @@ export default function CobitAllQuestions({ framework }: Props) {
                 toast.success('Evaluación completa enviada');
                 setTimeout(() => {
                     router.visit('/dashboard');
-                }, 1000); 
+                }, 1000);
             },
-      onError: () => toast.error('Error al enviar evaluación'),
+            onError: () => toast.error('Error al enviar evaluación'),
         });
     };
 
@@ -88,45 +88,50 @@ export default function CobitAllQuestions({ framework }: Props) {
             { title: 'Evaluación', href: '/cobit/allQuestions' }
         ]}>
             <Head title="Evaluación COBIT" />
-            <div className="p-6 space-y-6">
-                <div className="flex justify-between items-center">
-                    <h1 className="text-2xl font-bold">Dominio: {currentGroup.dominio}</h1>
-                    {groupIndex === 0 && (
-                        <Button variant="destructive" onClick={handleCancel}>Cancelar</Button>
-                    )}
+            <div className="p-6 space-y-8">
+                <div className="text-center">
+                    <h1 className="text-3xl font-bold text-[#B23A8A]">Dominio: {currentGroup.dominio}</h1>
                 </div>
 
-                {currentGroup.procesos.map(process => (
-                    <div key={process.id} className="space-y-4">
-                        <h2 className="text-xl font-semibold">{process.name}</h2>
-                        {process.questions.map(question => (
-                            <Card key={question.id} className="p-4 space-y-2">
-                                <p className="font-medium">{question.text}</p>
-                                <div className="grid gap-2 md:grid-cols-2">
-                                    {question.options.map(option => (
-                                        <Button
-                                            key={option.id}
-                                            variant={answers[question.id] === option.id ? 'default' : 'outline'}
-                                            onClick={() => handleAnswer(question.id, option.id)}
-                                        >
-                                            {option.text}
-                                        </Button>
-                                    ))}
+                <div className="space-y-6">
+                    {currentGroup.procesos.map(process => (
+                        <Card key={process.id} className="p-6 space-y-4 border-2 border-[#E9C7E0] shadow-sm">
+                            <h2 className="text-xl font-semibold text-[#B23A8A]">{process.name}</h2>
+                            {process.questions.map(question => (
+                                <div key={question.id} className="space-y-2">
+                                    <p className="font-medium text-gray-800 dark:text-gray-100">{question.text}</p>
+                                    <div className="grid gap-2 md:grid-cols-2">
+                                        {question.options.map(option => (
+                                            <Button
+                                                key={option.id}
+                                                variant={answers[question.id] === option.id ? 'default' : 'outline'}
+                                                onClick={() => handleAnswer(question.id, option.id)}
+                                            >
+                                                {option.text}
+                                            </Button>
+                                        ))}
+                                    </div>
                                 </div>
-                            </Card>
-                        ))}
+                            ))}
+                        </Card>
+                    ))}
+                </div>
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mt-8">
+                    <div>
+                        {groupIndex === 0 && (
+                            <Button variant="destructive" onClick={handleCancel}>Cancelar evaluación</Button>
+                        )}
                     </div>
-                ))}
-
-                <div className="flex justify-between mt-6">
-                    {groupIndex > 0 && (
-                        <Button variant="secondary" onClick={handleBack}>Anterior</Button>
-                    )}
-                    {groupIndex < framework.processGroups.length - 1 ? (
-                        <Button onClick={handleNext}>Siguiente</Button>
-                    ) : (
-                        <Button onClick={handleSubmit}>Enviar evaluación (finalizar)</Button>
-                    )}
+                    <div className="flex gap-4 ml-auto">
+                        {groupIndex > 0 && (
+                            <Button variant="secondary" onClick={handleBack}>Anterior</Button>
+                        )}
+                        {groupIndex < framework.processGroups.length - 1 ? (
+                            <Button onClick={handleNext}>Siguiente</Button>
+                        ) : (
+                            <Button onClick={handleSubmit}>Enviar evaluación (finalizar)</Button>
+                        )}
+                    </div>
                 </div>
             </div>
         </AppSidebarLayout>

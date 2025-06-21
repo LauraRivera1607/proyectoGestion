@@ -18,7 +18,6 @@ export default function LoginPage() {
             <Head title="Iniciar Sesión" />
 
             <div className="flex w-full max-w-5xl overflow-hidden rounded-lg bg-white shadow-xl">
-                {/* Lado izquierdo */}
                 <div className="hidden w-1/2 flex-col items-center justify-center bg-[#B23A8A] p-10 text-white lg:flex">
                     <img src="/Logo.png" alt="Logo" className="mb-3 h-28 w-28" />
                     <h2 className="text-4xl font-bold">¡Hola!</h2>
@@ -34,7 +33,6 @@ export default function LoginPage() {
                     </div>
                 </div>
 
-                {/* Lado derecho */}
                 <div className="w-full p-10 lg:w-1/2">
                     <h2 className="mb-6 text-3xl font-bold text-[#B23A8A]">Iniciar Sesión</h2>
 
@@ -87,6 +85,12 @@ export default function LoginPage() {
                         ¿No tienes cuenta?
                         <Link href={route('register')} className="ml-2 text-[#B23A8A] hover:underline">
                             Regístrate
+                        </Link>
+                    </p>
+                    <p className="mt-6 text-center text-sm text-gray-700">
+                        ¿Olvidaste tu contraseña?
+                        <Link href={route('password.request')} className="ml-2 text-[#B23A8A] hover:underline">
+                            Recuperar cuenta
                         </Link>
                     </p>
                 </div>

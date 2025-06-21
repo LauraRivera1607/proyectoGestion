@@ -15,14 +15,18 @@ export default function LoginPage() {
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-[#B23A8A] via-[#C85EB4] to-[#F6C3F0]">
-            <Head title="Iniciar Sesión" />
+            <Head title="Iniciar Sesión - Evaluación CMMI y COBIT" />
 
             <div className="flex w-full max-w-5xl overflow-hidden rounded-2xl bg-white shadow-2xl">
-                {/* Panel izquierdo */}
+
                 <div className="hidden w-1/2 flex-col items-center justify-center bg-[#B23A8A] p-10 text-white lg:flex">
                     <img src="/Logo.png" alt="Logo" className="mb-6 h-28 w-28" />
-                    <h2 className="text-4xl font-bold">¡Hola!</h2>
-                    <p className="mt-3 text-center text-sm leading-relaxed text-white/80">Bienvenido, inicia sesión con tus redes o con tu cuenta</p>
+                    <h2 className="text-3xl font-bold leading-snug text-center">
+                        Sistema de Evaluación<br />CMMI & COBIT
+                    </h2>
+                    <p className="mt-3 text-center text-sm leading-relaxed text-white/80">
+                        Evalúa el nivel de madurez de tus procesos<br />con base en los marcos CMMI y COBIT.
+                    </p>
 
                     <div className="mt-6 flex gap-4">
                         <button className="flex items-center gap-2 rounded-full bg-[#4267B2] px-5 py-2 text-sm font-medium shadow hover:opacity-90">
@@ -34,12 +38,13 @@ export default function LoginPage() {
                     </div>
                 </div>
 
-                {/* Panel derecho */}
                 <div className="w-full p-10 lg:w-1/2">
-                    <h2 className="mb-6 text-3xl font-extrabold text-[#B23A8A]">Iniciar Sesión</h2>
+                    <h2 className="mb-2 text-3xl font-extrabold text-[#B23A8A]">Iniciar Sesión</h2>
+                    <p className="mb-6 text-sm text-gray-600">
+                        Accede a tu cuenta para gestionar evaluaciones de madurez según los marcos CMMI y COBIT.
+                    </p>
 
                     <form onSubmit={submit} className="space-y-6">
-                        {/* Email */}
                         <div>
                             <label className="block text-sm font-semibold text-[#B23A8A]">Correo electrónico</label>
                             <input
@@ -54,7 +59,6 @@ export default function LoginPage() {
                             {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
                         </div>
 
-                        {/* Password */}
                         <div>
                             <label className="block text-sm font-semibold text-[#B23A8A]">Contraseña</label>
                             <input
@@ -69,7 +73,6 @@ export default function LoginPage() {
                             {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
                         </div>
 
-                        {/* Submit */}
                         <button
                             type="submit"
                             disabled={processing}
@@ -90,6 +93,12 @@ export default function LoginPage() {
                         ¿No tienes cuenta?
                         <Link href={route('register')} className="ml-2 font-semibold text-[#B23A8A] hover:underline">
                             Regístrate
+                        </Link>
+                    </p>
+                    <p className="mt-6 text-center text-sm text-gray-700">
+                        ¿Olvidaste tu contraseña?
+                        <Link href={route('password.request')} className="ml-2 font-semibold text-[#B23A8A] hover:underline">
+                            Recuperar cuenta
                         </Link>
                     </p>
                 </div>

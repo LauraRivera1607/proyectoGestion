@@ -4,6 +4,7 @@ import AppSidebarLayout from '@/layouts/app/app-sidebar-layout';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { toast } from 'sonner';
+
 type Option = {
     id: number;
     text: string;
@@ -62,44 +63,59 @@ export default function CmmiEvaluar({ framework }: Props) {
         });
     };
 
+    const handleCancel = () => {
+        window.location.href = '/dashboard';
+    };
 
     return (
-        <AppSidebarLayout breadcrumbs={[{ title: 'CMMI', href: '/cmmi' }, { title: 'Evaluación', href: '/cmmi/evaluar' }]}>
+        <AppSidebarLayout breadcrumbs={[
+            { title: 'CMMI', href: '/cmmi' },
+            { title: 'Evaluación', href: '/cmmi/evaluar' }
+        ]}>
             <Head title="Evaluación CMMI" />
-            <div className="p-6 space-y-6">
-                <h1 className="text-2xl font-bold">Evaluación CMMI</h1>
-                <p className="text-muted-foreground">Selecciona una opción para cada pregunta:</p>
+            <div className="p-6 space-y-8">
 
-                {framework.processes.map(process => (
-                    <div key={process.id} className="space-y-4">
-                        <h2 className="text-xl font-semibold">{process.name}</h2>
+                <div className="text-center">
+                    <h1 className="text-3xl font-bold text-[#B23A8A]">Evaluación CMMI</h1>
+                    <p className="text-muted-foreground mt-2">Selecciona una opción para cada pregunta:</p>
+                </div>
 
-                        {process.questions.map(question => (
-                            <Card key={question.id} className="p-4 space-y-2">
-                                <p className="font-medium">{question.text}</p>
-                                <div className="grid gap-2 md:grid-cols-2">
-                                    {question.options.map(option => (
-                                        <Button
-                                            key={option.id}
-                                            variant={answers[question.id] === option.id ? 'default' : 'outline'}
-                                            onClick={() => handleAnswer(question.id, option.id)}
-                                        >
-                                            {option.text}
-                                        </Button>
-                                    ))}
+                <div className="space-y-6">
+                    {framework.processes.map(process => (
+                        <Card key={process.id} className="p-6 space-y-4 border-2 border-[#E9C7E0] shadow-sm">
+                            <h2 className="text-xl font-semibold text-[#B23A8A]">{process.name}</h2>
+
+                            {process.questions.map(question => (
+                                <div key={question.id} className="space-y-2">
+                                    <p className="font-medium text-gray-800 dark:text-gray-100">{question.text}</p>
+                                    <div className="grid gap-2 md:grid-cols-2">
+                                        {question.options.map(option => (
+                                            <Button
+                                                key={option.id}
+                                                variant={answers[question.id] === option.id ? 'default' : 'outline'}
+                                                onClick={() => handleAnswer(question.id, option.id)}
+                                            >
+                                                {option.text}
+                                            </Button>
+                                        ))}
+                                    </div>
                                 </div>
-                            </Card>
-                        ))}
-                    </div>
-                ))}
-
-                <Button
-                    className="mt-6"
-                    onClick={sendAnswer}
-                    disabled={loading}
-                >
-                    {loading ? 'Enviando...' : 'Enviar evaluación'}
-                </Button>
+                            ))}
+                        </Card>
+                    ))}
+                </div>
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mt-8">
+                    <Button variant="destructive" onClick={handleCancel}>
+                        Cancelar evaluación
+                    </Button>
+                    <Button
+                        onClick={sendAnswer}
+                        disabled={loading}
+                        className="px-6 py-2"
+                    >
+                        {loading ? 'Enviando...' : 'Enviar evaluación'}
+                    </Button>
+                </div>
             </div>
         </AppSidebarLayout>
     );

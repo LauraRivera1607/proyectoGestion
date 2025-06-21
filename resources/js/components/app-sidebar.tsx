@@ -1,9 +1,17 @@
 import { Link } from '@inertiajs/react';
-import { History, LayoutGrid } from 'lucide-react';
+import { History, LayoutGrid, Landmark, TrendingUp } from 'lucide-react';
 
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem
+} from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
@@ -20,14 +28,13 @@ const mainNavItems: NavItem[] = [
 ];
 
 const staticFrameworks = [
-    { id: 'cobit', name: 'COBIT' },
-    { id: 'cmmi', name: 'CMMI' },
+    { id: 'cobit', name: 'COBIT', icon: Landmark },
+    { id: 'cmmi', name: 'CMMI', icon: TrendingUp },
 ];
 
 export function AppSidebar() {
     return (
         <Sidebar collapsible="icon" variant="inset">
-            {/* Encabezado */}
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
@@ -40,7 +47,6 @@ export function AppSidebar() {
                 </SidebarMenu>
             </SidebarHeader>
 
-            {/* Contenido principal */}
             <SidebarContent>
                 <NavMain items={mainNavItems} />
 
@@ -49,16 +55,18 @@ export function AppSidebar() {
                     {staticFrameworks.map((fw) => (
                         <SidebarMenuItem key={fw.id}>
                             <SidebarMenuButton asChild>
-                                <Link href={`/${fw.id}`}>{fw.name}</Link>
+                                <Link href={`/${fw.id}`} className="flex items-center gap-2">
+                                    <fw.icon className="w-4 h-4" />
+                                    <span>{fw.name}</span>
+                                </Link>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
                     ))}
                 </SidebarMenu>
             </SidebarContent>
 
-            {/* Footer con menú de usuario */}
             <SidebarFooter>
-                <NavUser />
+                <NavUser/>
             </SidebarFooter>
         </Sidebar>
     );
