@@ -1,6 +1,5 @@
-import React from 'react';
-import { Head } from '@inertiajs/react';
 import AppSidebarLayout from '@/layouts/app/app-sidebar-layout';
+import { Head } from '@inertiajs/react';
 
 interface Evaluation {
     id: number;
@@ -36,9 +35,7 @@ export default function CobitAllQuestions({ framework, lastCMMI, lastCobitEvalua
     };
 
     const cobitByDomain = COBIT_DOMAINS.map((domain) => {
-        const match = lastCobitEvaluations.find((e) =>
-            (e.domain ?? '').toUpperCase().includes(domain.key)
-        );
+        const match = lastCobitEvaluations.find((e) => (e.domain ?? '').toUpperCase().includes(domain.key));
         return {
             name: domain.name,
             nivel: match ? match.nivel : null,
@@ -47,54 +44,57 @@ export default function CobitAllQuestions({ framework, lastCMMI, lastCobitEvalua
         };
     });
 
-    const hasCobitData = cobitByDomain.some(d => d.nivel !== null);
+    const hasCobitData = cobitByDomain.some((d) => d.nivel !== null);
     const hasCmmiData = lastCMMI !== null;
 
     return (
         <AppSidebarLayout breadcrumbs={[{ title: 'Historial', href: '/history' }]}>
             <Head title="Historial" />
-            <div className="max-w-3xl mx-auto p-6">
-                <h1 className="text-2xl font-bold mb-6">HISTORIAL</h1>
-                {hasCmmiData ? (
-                    <div className="mb-8 border p-4 rounded shadow w-full">
-                        <h2 className="text-lg font-semibold text-gray-800 mb-2">CMMI</h2>
-                        <p className="text-gray-700">
-                            {formatDate(lastCMMI.created_at)}{' '}
-                            <span className="ml-4 font-semibold">NIVEL {lastCMMI.nivel}</span>
+            <div className="mx-auto max-w-3xl space-y-8 p-6">
+                <h1 className="text-3xl font-bold text-[#B23A8A]">Historial de Evaluaciones</h1>
+
+                <div className="rounded-xl border border-[#C85EB4]/40 bg-white p-6 shadow dark:border-[#C85EB4]/30 dark:bg-[#1f0d1e]">
+                    <h2 className="mb-3 text-xl font-semibold text-[#B23A8A]">CMMI</h2>
+                    {hasCmmiData ? (
+                        <div className="space-y-2 text-gray-700 dark:text-gray-300">
+                            <p>
+                                <span className="font-medium">Fecha:</span> {formatDate(lastCMMI.created_at)}
+                            </p>
+                            <p>
+                                <span className="font-medium">Nivel alcanzado:</span> Nivel {lastCMMI.nivel}
+                            </p>
                             <a
                                 href={`/cmmi/report/${lastCMMI.id}`}
-                                className="ml-6 text-blue-600 underline"
+                                className="mt-2 inline-block text-sm text-[#C85EB4] underline transition hover:text-[#B23A8A]"
                             >
-                                Ver reporte
+                                Ver reporte completo →
                             </a>
-                        </p>
-                    </div>
-                ) : (
-                    <div className="mb-8 border p-4 rounded shadow w-full">
-                        <h2 className="text-lg font-semibold text-gray-800 mb-2">CMMI</h2>
+                        </div>
+                    ) : (
                         <p className="text-muted-foreground">Aún no has realizado ninguna evaluación CMMI.</p>
-                    </div>
-                )}
-                <div className="border p-4 rounded shadow">
-                    <h2 className="text-lg font-semibold text-gray-800 mb-2">COBIT</h2>
+                    )}
+                </div>
 
+                <div className="rounded-xl border border-[#C85EB4]/40 bg-white p-6 shadow dark:border-[#C85EB4]/30 dark:bg-[#1f0d1e]">
+                    <h2 className="mb-3 text-xl font-semibold text-[#B23A8A]">COBIT</h2>
                     {hasCobitData ? (
                         <>
-                            <p className="text-gray-700">
-                                {formatDate(cobitByDomain.find(d => d.id !== null)?.created_at ?? '')}
-                                <a
-                                    href={`/cobit/report/${lastCobitEvaluations[0].id}`}
-                                    className="ml-6 text-blue-600 underline"
-                                >
-                                    Ver reporte
-                                </a>
+                            <p className="text-gray-700 dark:text-gray-300">
+                                <span className="font-medium">Última evaluación:</span>{' '}
+                                {formatDate(cobitByDomain.find((d) => d.id !== null)?.created_at ?? '')}
                             </p>
+                            <a
+                                href={`/cobit/report/${lastCobitEvaluations[0].id}`}
+                                className="mt-2 inline-block text-sm text-[#C85EB4] underline transition hover:text-[#B23A8A]"
+                            >
+                                Ver reporte completo →
+                            </a>
 
-                            <ul className="mt-4 space-y-1 text-gray-700">
+                            <ul className="mt-4 divide-y divide-[#F6C3F0]/30">
                                 {cobitByDomain.map((domain, idx) => (
-                                    <li key={idx} className="flex justify-between">
+                                    <li key={idx} className="flex justify-between py-2 text-gray-700 dark:text-gray-300">
                                         <span>{domain.name}</span>
-                                        <span>{domain.nivel !== null ? `${domain.nivel}%` : 'Sin evaluar'}</span>
+                                        <span className="font-medium">{domain.nivel !== null ? `${domain.nivel}%` : 'Sin evaluar'}</span>
                                     </li>
                                 ))}
                             </ul>

@@ -1,110 +1,99 @@
-import { Head, useForm } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
-import InputError from '@/components/input-error';
-import TextLink from '@/components/text-link';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import AuthLayout from '@/layouts/auth-layout';
-
-type LoginForm = {
-    email: string;
-    password: string;
-    remember: boolean;
-};
-
-interface LoginProps {
-    status?: string;
-    canResetPassword: boolean;
-}
-
-export default function Login({ status, canResetPassword }: LoginProps) {
-    const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
+export default function LoginPage() {
+    const { data, setData, post, processing, errors } = useForm({
         email: '',
         password: '',
-        remember: false,
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(route('login'), {
-            onFinish: () => reset('password'),
-        });
+        post(route('login'));
     };
 
     return (
-        <AuthLayout title="Log in to your account" description="Enter your email and password below to log in">
-            <Head title="Log in" />
+        <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-[#B23A8A] via-[#C85EB4] to-[#F6C3F0]">
+            <Head title="Iniciar Sesión" />
 
-            <form className="flex flex-col gap-6" onSubmit={submit}>
-                <div className="grid gap-6">
-                    <div className="grid gap-2">
-                        <Label htmlFor="email">Email address</Label>
-                        <Input
-                            id="email"
-                            type="email"
-                            required
-                            autoFocus
-                            tabIndex={1}
-                            autoComplete="email"
-                            value={data.email}
-                            onChange={(e) => setData('email', e.target.value)}
-                            placeholder="email@example.com"
-                        />
-                        <InputError message={errors.email} />
+            <div className="flex w-full max-w-5xl overflow-hidden rounded-2xl bg-white shadow-2xl">
+                {/* Panel izquierdo */}
+                <div className="hidden w-1/2 flex-col items-center justify-center bg-[#B23A8A] p-10 text-white lg:flex">
+                    <img src="/Logo.png" alt="Logo" className="mb-6 h-28 w-28" />
+                    <h2 className="text-4xl font-bold">¡Hola!</h2>
+                    <p className="mt-3 text-center text-sm leading-relaxed text-white/80">Bienvenido, inicia sesión con tus redes o con tu cuenta</p>
+
+                    <div className="mt-6 flex gap-4">
+                        <button className="flex items-center gap-2 rounded-full bg-[#4267B2] px-5 py-2 text-sm font-medium shadow hover:opacity-90">
+                            <span className="fab fa-facebook-f" /> Facebook
+                        </button>
+                        <button className="flex items-center gap-2 rounded-full bg-[#1DA1F2] px-5 py-2 text-sm font-medium shadow hover:opacity-90">
+                            <span className="fab fa-twitter" /> Twitter
+                        </button>
                     </div>
+                </div>
 
-                    <div className="grid gap-2">
-                        <div className="flex items-center">
-                            <Label htmlFor="password">Password</Label>
-                            {canResetPassword && (
-                                <TextLink href={route('password.request')} className="ml-auto text-sm" tabIndex={5}>
-                                    Forgot password?
-                                </TextLink>
-                            )}
+                {/* Panel derecho */}
+                <div className="w-full p-10 lg:w-1/2">
+                    <h2 className="mb-6 text-3xl font-extrabold text-[#B23A8A]">Iniciar Sesión</h2>
+
+                    <form onSubmit={submit} className="space-y-6">
+                        {/* Email */}
+                        <div>
+                            <label className="block text-sm font-semibold text-[#B23A8A]">Correo electrónico</label>
+                            <input
+                                type="email"
+                                name="email"
+                                value={data.email}
+                                onChange={(e) => setData('email', e.target.value)}
+                                required
+                                placeholder="ejemplo@correo.com"
+                                className="mt-1 w-full rounded-md border border-[#C85EB4] bg-white px-4 py-2 text-gray-800 shadow-sm transition focus:border-[#B23A8A] focus:ring-1 focus:ring-[#B23A8A] focus:outline-none"
+                            />
+                            {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
                         </div>
-                        <Input
-                            id="password"
-                            type="password"
-                            required
-                            tabIndex={2}
-                            autoComplete="current-password"
-                            value={data.password}
-                            onChange={(e) => setData('password', e.target.value)}
-                            placeholder="Password"
-                        />
-                        <InputError message={errors.password} />
-                    </div>
 
-                    <div className="flex items-center space-x-3">
-                        <Checkbox
-                            id="remember"
-                            name="remember"
-                            checked={data.remember}
-                            onClick={() => setData('remember', !data.remember)}
-                            tabIndex={3}
-                        />
-                        <Label htmlFor="remember">Remember me</Label>
-                    </div>
+                        {/* Password */}
+                        <div>
+                            <label className="block text-sm font-semibold text-[#B23A8A]">Contraseña</label>
+                            <input
+                                type="password"
+                                name="password"
+                                value={data.password}
+                                onChange={(e) => setData('password', e.target.value)}
+                                required
+                                placeholder="••••••••"
+                                className="mt-1 w-full rounded-md border border-[#C85EB4] bg-white px-4 py-2 text-gray-800 shadow-sm transition focus:border-[#B23A8A] focus:ring-1 focus:ring-[#B23A8A] focus:outline-none"
+                            />
+                            {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
+                        </div>
 
-                    <Button type="submit" className="mt-4 w-full" tabIndex={4} disabled={processing}>
-                        {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                        Log in
-                    </Button>
+                        {/* Submit */}
+                        <button
+                            type="submit"
+                            disabled={processing}
+                            className="w-full rounded-full bg-[#B23A8A] px-6 py-3 font-semibold text-white shadow-md transition hover:bg-[#a3307b] focus:ring-2 focus:ring-[#C85EB4] focus:ring-offset-2 focus:outline-none"
+                        >
+                            {processing ? (
+                                <span className="flex items-center justify-center gap-2">
+                                    <LoaderCircle className="h-4 w-4 animate-spin" />
+                                    Iniciando...
+                                </span>
+                            ) : (
+                                'Iniciar sesión'
+                            )}
+                        </button>
+                    </form>
+
+                    <p className="mt-6 text-center text-sm text-gray-600">
+                        ¿No tienes cuenta?
+                        <Link href={route('register')} className="ml-2 font-semibold text-[#B23A8A] hover:underline">
+                            Regístrate
+                        </Link>
+                    </p>
                 </div>
-
-                <div className="text-center text-sm text-muted-foreground">
-                    Don't have an account?{' '}
-                    <TextLink href={route('register')} tabIndex={5}>
-                        Sign up
-                    </TextLink>
-                </div>
-            </form>
-
-            {status && <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>}
-        </AuthLayout>
+            </div>
+        </div>
     );
 }

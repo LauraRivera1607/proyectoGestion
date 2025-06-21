@@ -59,14 +59,6 @@
     --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
 @layer base {
     *,
     ::after,
@@ -78,74 +70,74 @@
 }
 
 :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --destructive-foreground: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.87 0 0);
-    --chart-1: oklch(0.646 0.222 41.116);
-    --chart-2: oklch(0.6 0.118 184.704);
-    --chart-3: oklch(0.398 0.07 227.392);
-    --chart-4: oklch(0.828 0.189 84.429);
-    --chart-5: oklch(0.769 0.188 70.08);
+    --background: #ffffff;
+    --foreground: #1a1a1a;
+    --card: #fdfbfe;
+    --card-foreground: #1a1a1a;
+    --popover: #ffffff;
+    --popover-foreground: #1a1a1a;
+    --primary: #B23A8A;
+    --primary-foreground: #ffffff;
+    --secondary: #F6C3F0;
+    --secondary-foreground: #B23A8A;
+    --muted: #f9f5f8;
+    --muted-foreground: #555;
+    --accent: #C85EB4;
+    --accent-foreground: #fff;
+    --destructive: #dc2626;
+    --destructive-foreground: #fff;
+    --border: #e4d4e0;
+    --input: #f2e6f0;
+    --ring: #B23A8A;
+    --chart-1: #C85EB4;
+    --chart-2: #F6C3F0;
+    --chart-3: #B23A8A;
+    --chart-4: #FFB6C1;
+    --chart-5: #A23A77;
     --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.87 0 0);
+    --sidebar: #F6C3F0;
+    --sidebar-foreground: #1a1a1a;
+    --sidebar-primary: #B23A8A;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #C85EB4;
+    --sidebar-accent-foreground: #fff;
+    --sidebar-border: #e9d8e4;
+    --sidebar-ring: #B23A8A;
 }
 
 .dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.145 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.145 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.985 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.396 0.141 25.723);
-    --destructive-foreground: oklch(0.637 0.237 25.331);
-    --border: oklch(0.269 0 0);
-    --input: oklch(0.269 0 0);
-    --ring: oklch(0.439 0 0);
-    --chart-1: oklch(0.488 0.243 264.376);
-    --chart-2: oklch(0.696 0.17 162.48);
-    --chart-3: oklch(0.769 0.188 70.08);
-    --chart-4: oklch(0.627 0.265 303.9);
-    --chart-5: oklch(0.645 0.246 16.439);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.985 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(0.269 0 0);
-    --sidebar-ring: oklch(0.439 0 0);
+    --background: #1c1c1c;
+    --foreground: #ffffff;
+    --card: #2a2a2a;
+    --card-foreground: #ffffff;
+    --popover: #1c1c1c;
+    --popover-foreground: #ffffff;
+    --primary: #C85EB4;
+    --primary-foreground: #ffffff;
+    --secondary: #B23A8A;
+    --secondary-foreground: #ffffff;
+    --muted: #2f2f2f;
+    --muted-foreground: #cccccc;
+    --accent: #F6C3F0;
+    --accent-foreground: #1a1a1a;
+    --destructive: #dc2626;
+    --destructive-foreground: #fff;
+    --border: #4a4a4a;
+    --input: #333;
+    --ring: #C85EB4;
+    --chart-1: #F6C3F0;
+    --chart-2: #C85EB4;
+    --chart-3: #B23A8A;
+    --chart-4: #FFB6C1;
+    --chart-5: #A23A77;
+    --sidebar: #2a2a2a;
+    --sidebar-foreground: #ffffff;
+    --sidebar-primary: #C85EB4;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #B23A8A;
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-border: #3a3a3a;
+    --sidebar-ring: #C85EB4;
 }
 
 @layer base {

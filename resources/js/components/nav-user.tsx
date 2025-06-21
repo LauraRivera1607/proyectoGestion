@@ -12,6 +12,8 @@ export function NavUser() {
     const { state } = useSidebar();
     const isMobile = useIsMobile();
 
+    const side = isMobile ? 'bottom' : state === 'collapsed' ? 'left' : 'bottom';
+
     return (
         <SidebarMenu>
             <SidebarMenuItem>
@@ -23,9 +25,10 @@ export function NavUser() {
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
-                        className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+                        style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}
+                        className="min-w-56 rounded-lg"
                         align="end"
-                        side={isMobile ? 'bottom' : state === 'collapsed' ? 'left' : 'bottom'}
+                        side={side}
                     >
                         <UserMenuContent user={auth.user} />
                     </DropdownMenuContent>

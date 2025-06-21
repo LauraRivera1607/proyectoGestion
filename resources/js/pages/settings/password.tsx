@@ -5,15 +5,15 @@ import { type BreadcrumbItem } from '@/types';
 import { Transition } from '@headlessui/react';
 import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler, useRef } from 'react';
-
 import HeadingSmall from '@/components/heading-small';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { LoaderCircle } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Password settings',
+        title: 'Configuración de contraseña',
         href: '/settings/password',
     },
 ];
@@ -50,15 +50,20 @@ export default function Password() {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Password settings" />
+            <Head title="Configuración de contraseña" />
 
             <SettingsLayout>
                 <div className="space-y-6">
-                    <HeadingSmall title="Update password" description="Ensure your account is using a long, random password to stay secure" />
+                    <HeadingSmall title="Actualizar contraseña" description="Usa una contraseña larga y aleatoria para mantener tu cuenta segura" />
 
-                    <form onSubmit={updatePassword} className="space-y-6">
+                    <form
+                        onSubmit={updatePassword}
+                        className="space-y-6 rounded-xl border border-[#C85EB4]/30 bg-white/80 p-6 shadow-md dark:border-[#F6C3F0]/20 dark:bg-[#2b002c]"
+                    >
                         <div className="grid gap-2">
-                            <Label htmlFor="current_password">Current password</Label>
+                            <Label htmlFor="current_password" className="text-[#B23A8A]">
+                                Contraseña actual
+                            </Label>
 
                             <Input
                                 id="current_password"
@@ -66,16 +71,17 @@ export default function Password() {
                                 value={data.current_password}
                                 onChange={(e) => setData('current_password', e.target.value)}
                                 type="password"
-                                className="mt-1 block w-full"
                                 autoComplete="current-password"
-                                placeholder="Current password"
+                                placeholder="••••••••"
                             />
 
-                            <InputError message={errors.current_password} />
+                            <InputError message={errors.current_password} className="mt-1" />
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="password">New password</Label>
+                            <Label htmlFor="password" className="text-[#B23A8A]">
+                                Nueva contraseña
+                            </Label>
 
                             <Input
                                 id="password"
@@ -83,41 +89,48 @@ export default function Password() {
                                 value={data.password}
                                 onChange={(e) => setData('password', e.target.value)}
                                 type="password"
-                                className="mt-1 block w-full"
                                 autoComplete="new-password"
-                                placeholder="New password"
+                                placeholder="••••••••"
                             />
 
-                            <InputError message={errors.password} />
+                            <InputError message={errors.password} className="mt-1" />
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="password_confirmation">Confirm password</Label>
+                            <Label htmlFor="password_confirmation" className="text-[#B23A8A]">
+                                Confirmar nueva contraseña
+                            </Label>
 
                             <Input
                                 id="password_confirmation"
                                 value={data.password_confirmation}
                                 onChange={(e) => setData('password_confirmation', e.target.value)}
                                 type="password"
-                                className="mt-1 block w-full"
                                 autoComplete="new-password"
-                                placeholder="Confirm password"
+                                placeholder="••••••••"
                             />
 
-                            <InputError message={errors.password_confirmation} />
+                            <InputError message={errors.password_confirmation} className="mt-1" />
                         </div>
 
                         <div className="flex items-center gap-4">
-                            <Button disabled={processing}>Save password</Button>
+                            <Button disabled={processing}>
+                                {processing && (
+                                    <span className="mr-2 animate-spin">
+                                        <LoaderCircle className="h-4 w-4" />
+                                    </span>
+                                )}
+                                Guardar contraseña
+                            </Button>
 
                             <Transition
                                 show={recentlySuccessful}
-                                enter="transition ease-in-out"
+                                enter="transition-opacity duration-300"
                                 enterFrom="opacity-0"
-                                leave="transition ease-in-out"
+                                leave="transition-opacity duration-300"
                                 leaveTo="opacity-0"
                             >
-                                <p className="text-sm text-neutral-600">Saved</p>
+                                <p className="text-sm text-[#C85EB4]">¡Contraseña actualizada!</p>
                             </Transition>
                         </div>
                     </form>

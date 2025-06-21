@@ -7,15 +7,26 @@ import { HTMLAttributes } from 'react';
 export default function AppearanceToggleDropdown({ className = '', ...props }: HTMLAttributes<HTMLDivElement>) {
     const { appearance, updateAppearance } = useAppearance();
 
+    const appearanceOptions = [
+        {
+            value: 'light',
+            label: 'Light',
+            icon: <Sun className="h-5 w-5" />,
+        },
+        {
+            value: 'dark',
+            label: 'Dark',
+            icon: <Moon className="h-5 w-5" />,
+        },
+        {
+            value: 'system',
+            label: 'System',
+            icon: <Monitor className="h-5 w-5" />,
+        },
+    ];
+
     const getCurrentIcon = () => {
-        switch (appearance) {
-            case 'dark':
-                return <Moon className="h-5 w-5" />;
-            case 'light':
-                return <Sun className="h-5 w-5" />;
-            default:
-                return <Monitor className="h-5 w-5" />;
-        }
+        return appearanceOptions.find((opt) => opt.value === appearance)?.icon ?? <Monitor className="h-5 w-5" />;
     };
 
     return (
@@ -28,24 +39,14 @@ export default function AppearanceToggleDropdown({ className = '', ...props }: H
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => updateAppearance('light')}>
-                        <span className="flex items-center gap-2">
-                            <Sun className="h-5 w-5" />
-                            Light
-                        </span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => updateAppearance('dark')}>
-                        <span className="flex items-center gap-2">
-                            <Moon className="h-5 w-5" />
-                            Dark
-                        </span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => updateAppearance('system')}>
-                        <span className="flex items-center gap-2">
-                            <Monitor className="h-5 w-5" />
-                            System
-                        </span>
-                    </DropdownMenuItem>
+                    {appearanceOptions.map((opt) => (
+                        <DropdownMenuItem key={opt.value} onClick={() => updateAppearance(opt.value as 'light' | 'dark' | 'system')}>
+                            <span className="flex items-center gap-2">
+                                {opt.icon}
+                                {opt.label}
+                            </span>
+                        </DropdownMenuItem>
+                    ))}
                 </DropdownMenuContent>
             </DropdownMenu>
         </div>
